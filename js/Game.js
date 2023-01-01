@@ -59,7 +59,31 @@ class Game {
       } else {
         button.target.classList.add('chosen')
         this.getActivePhrase.showMatchedLetter(button.target.innerText)
-        if (this.checkForWin()) this.gameOver(this.checkForWin())
+        if (this.checkForWin()) {
+          setTimeout(() => {
+            console.log('Delayed for 2 seconds so user can read phrase.')
+            this.gameOver(this.checkForWin())
+          }, '2000')
+        }
+      }
+    }
+    if (button.key) {
+      for (const key of keyboardKeys) {
+        if (key.innerText === button.key && key.className !== 'key wrong' && key.className !== 'key chosen') {
+          if (!this.getActivePhrase.checkLetter(key.innerText)) {
+            key.classList.add('wrong')
+            this.removeLife()
+          } else {
+            key.classList.add('chosen')
+            this.getActivePhrase.showMatchedLetter(key.innerText)
+            if (this.checkForWin()) {
+              setTimeout(() => {
+                console.log('Delayed for 2 seconds so user can read phrase.')
+                this.gameOver(this.checkForWin())
+              }, '2000')
+            }
+          }
+        }
       }
     }
   }
@@ -101,7 +125,9 @@ class Game {
       startScreen.children[1].innerText = 'Sorry, better luck next time!'
     }
   }
-
+  /**
+   * Resets the game to start over with a new game
+   */
   resetGame() {
     this.#missed = 0
     while (ul.hasChildNodes()) {

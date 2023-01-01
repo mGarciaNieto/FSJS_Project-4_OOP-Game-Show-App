@@ -16,10 +16,13 @@ const ul = document.querySelector('ul')
 const letters = document.querySelectorAll('.letter')
 const onscreenKeyboard = document.getElementById('qwerty')
 const buttons = document.querySelectorAll('button')
+const keyboardKeys = document.querySelectorAll('.key')
 
-/* Variables
+/* Variables and Constants
 ---------------------------------------------------------- */
 let game
+const LETTER_A = 65
+const LETTER_Z = 90
 
 starGameBtn.addEventListener('click', (e) => {
   game ? game.resetGame() : (game = new Game())
@@ -27,5 +30,10 @@ starGameBtn.addEventListener('click', (e) => {
 })
 
 onscreenKeyboard.addEventListener('click', (e) => {
+  // Event delegation
   game.handleInteraction(e)
+})
+
+document.addEventListener('keyup', (e) => {
+  startScreen.style.visibility === 'hidden' && e.keyCode >= 65 && e.keyCode <= 90 && game.handleInteraction(e)
 })
