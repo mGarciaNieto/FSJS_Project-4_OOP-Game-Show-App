@@ -123,6 +123,7 @@ class Game {
       startScreen.children[1].innerText = 'Sorry, better luck next time!'
     }
   }
+  
   /**
    * Resets the game to start over with a new game
    */
