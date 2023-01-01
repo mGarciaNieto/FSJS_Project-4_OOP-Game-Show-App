@@ -24,6 +24,7 @@
 }
 
 body {
+  background-color:rgba(189, 1, 180, .3);
   justify-content: space-evenly;
   flex-direction: column;
   display: flex;
