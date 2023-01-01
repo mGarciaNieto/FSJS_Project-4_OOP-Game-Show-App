@@ -35,5 +35,5 @@ onscreenKeyboard.addEventListener('click', (e) => {
 })
 
 document.addEventListener('keyup', (e) => {
-  startScreen.style.visibility === 'hidden' && e.keyCode >= 65 && e.keyCode <= 90 && game.handleInteraction(e)
+  startScreen.style.visibility === 'hidden' && e.keyCode >= LETTER_A && e.keyCode <= LETTER_Z && game.handleInteraction(e)
 })
