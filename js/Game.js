@@ -46,15 +46,31 @@ class Game {
     return new Phrase(this.getPhrases[Math.floor(Math.random() * this.#phrases.length)])
   }
 
-  handleInteraction() {}
+  /**
+   * Handles onscreen keyboard button clicks
+   * @param  {HTMLButtonElement} button - The clicked button element
+   */
+  handleInteraction(button) {
+    if (button.target.tagName === 'BUTTON') {
+      button.target.disabled = true
+      if (!this.getActivePhrase.checkLetter(button.target.innerText)) {
+        button.target.classList.add('wrong')
+        this.removeLife()
+      } else {
+        button.target.classList.add('chosen')
+        this.getActivePhrase.showMatchedLetter(button.target.innerText)
+        if (this.checkForWin()) this.gameOver(this.checkForWin())
+      }
+    }
+  }
 
   /**
    * Checks for winning move
    * @return {boolean} True if game has been won, false if game wasn't won
    */
   checkForWin() {
-    const hiddenLetter = document.querySelectorAll('.hide')
-    return hiddenLetter > 0 ? false : true
+    const hiddenLetters = !document.querySelectorAll('.hide').length
+    return hiddenLetters > 0
   }
 
   /**
@@ -64,12 +80,10 @@ class Game {
    */
   removeLife() {
     const MISSED_MAX = 5
-
     heartTries[this.getMissed].children[0].src = 'images/lostHeart.png'
-    this.getMissed++
+    this.#missed++
     if (this.getMissed === MISSED_MAX) {
-      const gameWon = false
-      this.gameOver(gameWon)
+      this.gameOver(false)
     }
   }
 
@@ -81,12 +95,24 @@ class Game {
     startScreen.style.visibility = 'visible'
     if (gameWon) {
       startScreen.classList.add('win')
-      startScreen.children[0].innerText = 'Great Job!'
-      startScreen.children[1].innerText = 'Play again?'
+      startScreen.children[1].innerText = 'Great Job!'
     } else {
-      startScreen.className.add('lose')
-      startScreen.children[0].innerText = 'Sorry, better luck next time!'
-      startScreen.children[1].innerText = 'Play again?'
+      startScreen.classList.add('lose')
+      startScreen.children[1].innerText = 'Sorry, better luck next time!'
+    }
+  }
+
+  resetGame() {
+    this.#missed = 0
+    while (ul.hasChildNodes()) {
+      ul.removeChild(ul.firstChild)
+    }
+    for (const button of buttons) {
+      button.className = 'key'
+      button.disabled = false
+    }
+    for (const tries of heartTries) {
+      tries.children[0].src = 'images/liveHeart.png'
     }
   }
 }

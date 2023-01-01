@@ -110,8 +110,8 @@ button {
 
 
 .show {
-  color: #fff;
-  background-color: #4ac0d5;
+  color: #000;
+  background-color: #76ce82;
   font-size: 20px;
   height: 65px;
   width: 65px;
@@ -120,6 +120,7 @@ button {
   border-radius: 5px;
   -webkit-animation-duration: .5s;
   animation-duration: .5s;
+  transition: background-color 2s  ease-in-out, color 2s ease-in-out;
 }
 
 

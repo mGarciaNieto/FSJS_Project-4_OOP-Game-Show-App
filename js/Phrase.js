@@ -6,10 +6,6 @@
 
 'use strict'
 
-/* DOM References
---------------------------------------------------------- */
-
-
 class Phrase {
   #phrase
 
@@ -25,7 +21,7 @@ class Phrase {
    */
   addPhraseToDisplay() {
     for (const char of this.getPhrase) {
-      char === ' ' ? ul.insertAdjacentHTML('beforeend', `<li class="space">${char}</li>`) : ul.insertAdjacentHTML('beforeend', `<li class="letter">${char}</li>`)
+      char === ' ' ? ul.insertAdjacentHTML('beforeend', `<li class="space">${char}</li>`) : ul.insertAdjacentHTML('beforeend', `<li class="hide letter">${char}</li>`)
     }
   }
 
@@ -34,9 +30,7 @@ class Phrase {
    * @param (string) letter - Letter to check
    */
   checkLetter(letter) {
-    for (const char of this.getPhrase) {
-      return char === letter
-    }
+    return this.getPhrase.includes(letter)
   }
 
   /**
@@ -44,11 +38,10 @@ class Phrase {
    * @param (string) letter - Letter to display
    */
   showMatchedLetter(letter) {
-    const letters = document.querySelectorAll('.letter') 
-    console.log(letters);
+    const letters = document.querySelectorAll('.letter')
     for (const matchLetter of letters) {
-      if (letter === matchLetter) {
-        //matchLetter.classList.remove('hide');
+      if (letter === matchLetter.innerText) {
+        matchLetter.classList.remove('hide');
         matchLetter.classList.add('show')
       }
     }
