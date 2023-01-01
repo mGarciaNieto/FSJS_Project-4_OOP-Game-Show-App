@@ -61,9 +61,9 @@ class Game {
         this.getActivePhrase.showMatchedLetter(button.target.innerText)
         if (this.checkForWin()) {
           setTimeout(() => {
-            console.log('Delayed for 2 seconds so user can read phrase.')
+            console.log('Delayed for 1 second so user can read phrase.')
             this.gameOver(this.checkForWin())
-          }, '2000')
+          }, '1000')
         }
       }
     }
