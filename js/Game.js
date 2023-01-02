@@ -13,7 +13,11 @@ class Game {
 
   constructor() {
     this.#missed = 0
-    this.#phrases = ['Break a leg', 'By hook or by crook', 'No pain no gain', 'Pull yourself together', 'So far so good']
+    this.#phrases = [new Phrase('Break a leg'), 
+                     new Phrase('By hook or by crook'), 
+                     new Phrase('No pain no gain'), 
+                     new Phrase('Pull yourself together'), 
+                     new Phrase('So far so good')]
     this.#activePhrase = null
   }
 
@@ -43,7 +47,7 @@ class Game {
    * @return {Object} Phrase object chosen to be used
    */
   getRandomPhrase() {
-    return new Phrase(this.getPhrases[Math.floor(Math.random() * this.#phrases.length)])
+    return this.getPhrases[Math.floor(Math.random() * this.#phrases.length)]
   }
 
   /**
@@ -60,6 +64,7 @@ class Game {
         button.target.classList.add('chosen')
         this.getActivePhrase.showMatchedLetter(button.target.innerText)
         if (this.checkForWin()) {
+          this.disableKeyboardKeys()
           setTimeout(() => {
             this.gameOver(this.checkForWin())
           }, '1000')
@@ -75,7 +80,8 @@ class Game {
           } else {
             key.classList.add('chosen')
             this.getActivePhrase.showMatchedLetter(key.innerText)
-            if (this.checkForWin()) {
+            if (this.checkForWin(button)) {
+              this.disableKeyboardKeys()
               setTimeout(() => {
                 this.gameOver(this.checkForWin())
               }, '1000')
@@ -87,10 +93,19 @@ class Game {
   }
 
   /**
+   * Disables all keyboard keys
+   */
+  disableKeyboardKeys() {
+    for (const button of keyboardKeys) {
+      button.disabled = true
+    }
+  }
+
+  /**
    * Checks for winning move
    * @return {boolean} True if game has been won, false if game wasn't won
    */
-  checkForWin() {
+  checkForWin(btn) {
     const hiddenLetters = !document.querySelectorAll('.hide').length
     return hiddenLetters > 0
   }
@@ -116,14 +131,16 @@ class Game {
   gameOver(gameWon) {
     startScreen.style.visibility = 'visible'
     if (gameWon) {
+      startScreen.classList.remove('lose')
       startScreen.classList.add('win')
       startScreen.children[1].innerText = 'Great Job!'
     } else {
+      startScreen.classList.remove('win')
       startScreen.classList.add('lose')
       startScreen.children[1].innerText = 'Sorry, better luck next time!'
     }
   }
-  
+
   /**
    * Resets the game to start over with a new game
    */

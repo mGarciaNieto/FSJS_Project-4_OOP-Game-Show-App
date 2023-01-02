@@ -1,7 +1,7 @@
 # FSJS_Project-4_OOP-Game-Show-App
 The fourth of ten projects for the Full Stack JavaScript Techdegree program at TreeHouse. 
 ## Event listener has been added for mechanical keyboard interaction and App styles have been personalized
-- Mechanical keyboard functionality has been added so users can enter words using physical keyboards.
+- Mechanical keyboard functionality has been added so users can enter letters using physical keyboards.
 - Restrictions have been applied to keys on physical keyboards so only letter keys can be entered through the keyboard.
 - Main landing page background-color has been changed.
 - Active phrase page background-color has been modified.
