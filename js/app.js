@@ -17,7 +17,6 @@ const onscreenKeyboard = document.getElementById('qwerty')
 const buttons = document.querySelectorAll('button')
 const keyboardKeys = document.querySelectorAll('.key')
 
-
 /* Variables and Constants
 ---------------------------------------------------------- */
 let game
@@ -30,8 +29,9 @@ const LETTER_Z = 90 // letter z keyCode
  * @param  {listener} e
  */
 starGameBtn.addEventListener('click', (e) => {
-  game ? game.resetGame() : game = new Game()
+  game ? game.resetGame() : (game = new Game())
   game.startGame()
+  game.setIsGameRunning(true)
 })
 
 /**
@@ -50,8 +50,5 @@ onscreenKeyboard.addEventListener('click', (e) => {
  * @param  {listener} e
  */
 document.addEventListener('keyup', (e) => {
-  startScreen.style.visibility === 'hidden' && e.keyCode >= LETTER_A && e.keyCode <= LETTER_Z && game.handleInteraction(e)
+  startScreen.style.visibility === 'hidden' && game.getIsGameRunning() && e.keyCode >= LETTER_A && e.keyCode <= LETTER_Z && game.handleInteraction(e)
 })
-
-
-

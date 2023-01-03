@@ -10,15 +10,19 @@ class Game {
   #missed
   #phrases
   #activePhrase
+  #isGameRunning
 
   constructor() {
     this.#missed = 0
-    this.#phrases = [new Phrase('Break a leg'), 
-                     new Phrase('By hook or by crook'), 
-                     new Phrase('No pain no gain'), 
-                     new Phrase('Pull yourself together'), 
-                     new Phrase('So far so good')]
+    this.#phrases = [
+      new Phrase('Break a leg'), 
+      new Phrase('By hook or by crook'), 
+      new Phrase('No pain no gain'), 
+      new Phrase('Pull yourself together'), 
+      new Phrase('So far so good')
+    ]
     this.#activePhrase = null
+    this.#isGameRunning = null
   }
 
   get getMissed() {
@@ -31,6 +35,14 @@ class Game {
 
   get getActivePhrase() {
     return this.#activePhrase
+  }
+
+  getIsGameRunning() {
+    return this.#isGameRunning
+  }
+
+  setIsGameRunning(isRunning) {
+    this.#isGameRunning = isRunning
   }
 
   /**
@@ -63,12 +75,7 @@ class Game {
       } else {
         button.target.classList.add('chosen')
         this.getActivePhrase.showMatchedLetter(button.target.innerText)
-        if (this.checkForWin()) {
-          this.disableKeyboardKeys()
-          setTimeout(() => {
-            this.gameOver(this.checkForWin())
-          }, '1000')
-        }
+        this.disableKeyboardKeys()
       }
     }
     if (button.key) {
@@ -80,12 +87,7 @@ class Game {
           } else {
             key.classList.add('chosen')
             this.getActivePhrase.showMatchedLetter(key.innerText)
-            if (this.checkForWin(button)) {
-              this.disableKeyboardKeys()
-              setTimeout(() => {
-                this.gameOver(this.checkForWin())
-              }, '1000')
-            }
+            this.disableKeyboardKeys()
           }
         }
       }
@@ -93,9 +95,22 @@ class Game {
   }
 
   /**
-   * Disables all keyboard keys
+   * Checks for win and disables keyboard keys while the user reads the phrase
    */
   disableKeyboardKeys() {
+    if (this.checkForWin()) {
+      this.disableOnscreenKeyboardKeys()
+      this.#isGameRunning = false // disables physical keyboard keys
+      setTimeout(() => {
+        this.gameOver(this.checkForWin())
+      }, '1000')
+    }
+  }
+
+  /**
+   * Disables all onscreen keyboard keys
+   */
+  disableOnscreenKeyboardKeys() {
     for (const button of keyboardKeys) {
       button.disabled = true
     }
@@ -105,9 +120,9 @@ class Game {
    * Checks for winning move
    * @return {boolean} True if game has been won, false if game wasn't won
    */
-  checkForWin(btn) {
-    const hiddenLetters = !document.querySelectorAll('.hide').length
-    return hiddenLetters > 0
+  checkForWin() {
+    const hiddenLetters = document.querySelectorAll('.hide').length
+    return !(hiddenLetters > 0)
   }
 
   /**
@@ -131,8 +146,7 @@ class Game {
   gameOver(gameWon) {
     startScreen.style.visibility = 'visible'
     if (gameWon) {
-      startScreen.classList.remove('lose')
-      startScreen.classList.add('win')
+      startScreen.className = startScreen.className === 'lose' ? 'win' : 'win'
       startScreen.children[1].innerText = 'Great Job!'
     } else {
       startScreen.classList.remove('win')
