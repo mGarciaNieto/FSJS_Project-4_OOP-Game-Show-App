@@ -21,7 +21,8 @@ class Phrase {
    */
   addPhraseToDisplay() {
     for (const char of this.getPhrase) {
-      char === ' ' ? ul.insertAdjacentHTML('beforeend', `<li class="space">${char}</li>`) : ul.insertAdjacentHTML('beforeend', `<li class="hide letter">${char}</li>`)
+      char === ' ' ? ul.insertAdjacentHTML('beforeend', `<li class="space">${char}</li>`) :
+       ul.insertAdjacentHTML('beforeend', `<li class="hide letter">${char}</li>`)
     }
   }
 
