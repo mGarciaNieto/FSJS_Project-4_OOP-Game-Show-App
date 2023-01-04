@@ -8,4 +8,4 @@ The fourth of ten projects for the Full Stack JavaScript Techdegree program at T
 - Transition have been added to letters display along with color and background-color. 
 - SetTimeOut function has been added (1 second) so the user can read the phrase before the winner page shows up.
 - Private variables have been used within classes files.
-> Ready for marking...
+> Grade: Exceeds Expectations
